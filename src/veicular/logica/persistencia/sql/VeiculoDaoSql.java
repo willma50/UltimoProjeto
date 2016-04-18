@@ -37,6 +37,9 @@ public class VeiculoDaoSql extends DBDAO implements VeiculoDaoIF{
 								" where proprietario.ncs = ? group by proprietario.ncs";
 	private static final String FINDALL_NCS = "SELECT proprietario, classe, anofabricacao, placa, valorcompra, proprietario.ncs  FROM veiculo inner join " +
 								" proprietario on veiculo.proprietario = proprietario.nome where proprietario.ncs = ?;";
+	
+	private static final String FIND_TEMFROTA = "SELECT count(*) as qtd  FROM veiculo where proprietario = ? and frota = 1 group by proprietario ;";
+	
 	private ProprietarioDaoSql proprietarioDao;
 	
 	@Override
@@ -266,6 +269,24 @@ public class VeiculoDaoSql extends DBDAO implements VeiculoDaoIF{
 		return VeiculoDaoSql.TIPO_OUTRO;
 		
 		//return 0;
+	}
+
+	@Override
+	public boolean esProprietarioFrota(String nonme) throws SQLException {
+		Connection conn = this.getConnection();
+		PreparedStatement pstam = conn.prepareStatement(VeiculoDaoSql.FIND_TEMFROTA);
+		pstam.setString(1, nonme);
+		ResultSet rs = pstam.executeQuery();
+		int quantidade = 0;
+		if(rs.next()){		
+			quantidade = rs.getInt("qtd");
+		}
+		System.out.println(quantidade+" quantidade");
+		
+		if(quantidade > 0)
+			return true;
+		
+		return false;
 	}
 	
 }

@@ -1,6 +1,7 @@
 package veicular.logica.app;
 
 
+import java.sql.SQLException;
 import java.util.Collection;
 
 import veicular.logica.dominio.DAFFrota;
@@ -21,6 +22,9 @@ public interface VeiculoLogicaIF {
 	public int buscaAno();
 	public void atualizaVeiculo(TableModelos modelo);
 	public double valorTotalImpostoFrota(String numCSProprietario) throws Exception;
+	public double valorMedioImpostoFrota(String numCSProprietario) throws Exception;
 	public Collection<DAFIndividual> listarSumarioDAFIndividual(String numCSProprietario) throws Exception;
 	public String listarSumarioDAFFrota(String numCSProprietario) throws Exception;
+	public boolean esProprietarioFrota(String selectedItem) throws SQLException;
+
 }

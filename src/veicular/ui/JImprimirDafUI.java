@@ -4,8 +4,10 @@ import java.awt.BorderLayout;
 import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.SQLException;
 import java.util.Collection;
 import java.util.Enumeration;
+import java.util.Iterator;
 import java.util.Vector;
 
 import javax.swing.JFrame;
@@ -15,6 +17,7 @@ import javax.swing.border.EmptyBorder;
 import veicular.logica.app.ProprietarioLogica;
 import veicular.logica.app.ProprietarioLogicaIF;
 import veicular.logica.app.VeiculoLogicaIF;
+import veicular.logica.dominio.DAFIndividual;
 
 import javax.swing.AbstractButton;
 import javax.swing.GroupLayout;
@@ -32,6 +35,10 @@ import javax.swing.ButtonGroup;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 
+import java.awt.List;
+import java.awt.TextArea;
+
+
 public class JImprimirDafUI extends JFrame implements VeiculoUIIF, ActionListener{
 
 	private VeiculoLogicaIF appLogica;
@@ -42,10 +49,16 @@ public class JImprimirDafUI extends JFrame implements VeiculoUIIF, ActionListene
 	private JRadioButton radioDafFrota;
 	private JComboBox comboProprietario;
 	private JButton btnImprimir;
+	//private JTextPane textPaneResultado;
+	/**
+	 * @wbp.nonvisual location=54,269
+	 */
+	private final TextArea textArea = new TextArea();
 	
 	public JImprimirDafUI() {
+		setTitle("Impress\u00E3o da DAF");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 450, 300);
+		setBounds(100, 100, 468, 338);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -53,64 +66,61 @@ public class JImprimirDafUI extends JFrame implements VeiculoUIIF, ActionListene
 		comboProprietario = new JComboBox();
 		
 		JLabel label = new JLabel("Propriet\u00E1rio");
-		
-		radioDafIndividual = new JRadioButton("DAF Indiviaual");		
-		radioDafFrota = new JRadioButton("DAF Frota");
 		this.grupoRadio = new ButtonGroup();
-		grupoRadio.add(radioDafIndividual);
-		grupoRadio.add(radioDafFrota);
 		JLabel lblOpo = new JLabel("Op\u00E7\u00E3o");
 		
 		btnImprimir = new JButton("Imprimir");
 		btnImprimir.addActionListener(this);
 		
+		JPanel panel = new JPanel();
+		
+		radioDafIndividual = new JRadioButton("DAF Indiviaual");		
+		panel.add(radioDafIndividual);
+		grupoRadio.add(radioDafIndividual);
+		radioDafFrota = new JRadioButton("DAF Frota");
+		panel.add(radioDafFrota);
+		grupoRadio.add(radioDafFrota);
 		GroupLayout gl_contentPane = new GroupLayout(contentPane);
 		gl_contentPane.setHorizontalGroup(
 			gl_contentPane.createParallelGroup(Alignment.LEADING)
 				.addGroup(gl_contentPane.createSequentialGroup()
-					.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-					.addComponent(label, GroupLayout.PREFERRED_SIZE, 82, GroupLayout.PREFERRED_SIZE)
-					.addGap(29)
-					.addComponent(comboProprietario, GroupLayout.PREFERRED_SIZE, 296, GroupLayout.PREFERRED_SIZE)
-					.addContainerGap())
-				.addGroup(gl_contentPane.createSequentialGroup()
-					.addGap(67)
-					.addComponent(radioDafIndividual)
-					.addGap(18)
-					.addComponent(radioDafFrota)
-					.addContainerGap(169, Short.MAX_VALUE))
-				.addGroup(gl_contentPane.createSequentialGroup()
-					.addContainerGap()
-					.addComponent(lblOpo, GroupLayout.PREFERRED_SIZE, 47, GroupLayout.PREFERRED_SIZE)
-					.addContainerGap(367, Short.MAX_VALUE))
-				.addGroup(gl_contentPane.createSequentialGroup()
-					.addGap(116)
-					.addComponent(btnImprimir)
-					.addContainerGap(219, Short.MAX_VALUE))
+					.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
+						.addGroup(gl_contentPane.createSequentialGroup()
+							.addGap(10)
+							.addComponent(label, GroupLayout.PREFERRED_SIZE, 82, GroupLayout.PREFERRED_SIZE)
+							.addGap(4)
+							.addComponent(comboProprietario, GroupLayout.PREFERRED_SIZE, 308, GroupLayout.PREFERRED_SIZE))
+						.addGroup(gl_contentPane.createSequentialGroup()
+							.addGap(10)
+							.addComponent(lblOpo, GroupLayout.PREFERRED_SIZE, 47, GroupLayout.PREFERRED_SIZE)
+							.addGap(39)
+							.addComponent(panel, GroupLayout.PREFERRED_SIZE, 253, GroupLayout.PREFERRED_SIZE))
+						.addGroup(gl_contentPane.createSequentialGroup()
+							.addGap(185)
+							.addComponent(btnImprimir))
+						.addGroup(gl_contentPane.createSequentialGroup()
+							.addGap(23)
+							.addComponent(textArea, GroupLayout.PREFERRED_SIZE, 359, GroupLayout.PREFERRED_SIZE)))
+					.addContainerGap(38, Short.MAX_VALUE))
 		);
 		gl_contentPane.setVerticalGroup(
 			gl_contentPane.createParallelGroup(Alignment.LEADING)
 				.addGroup(gl_contentPane.createSequentialGroup()
-					.addContainerGap()
+					.addGap(13)
 					.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
 						.addGroup(gl_contentPane.createSequentialGroup()
-							.addGap(13)
+							.addGap(3)
 							.addComponent(label))
-						.addGroup(gl_contentPane.createSequentialGroup()
-							.addGap(10)
-							.addComponent(comboProprietario, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)))
+						.addComponent(comboProprietario, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+					.addGap(18)
 					.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
-						.addGroup(gl_contentPane.createSequentialGroup()
-							.addGap(45)
-							.addGroup(gl_contentPane.createParallelGroup(Alignment.BASELINE)
-								.addComponent(radioDafIndividual)
-								.addComponent(radioDafFrota)))
-						.addGroup(gl_contentPane.createSequentialGroup()
-							.addGap(28)
-							.addComponent(lblOpo)))
-					.addGap(62)
+						.addComponent(lblOpo)
+						.addComponent(panel, GroupLayout.PREFERRED_SIZE, 49, GroupLayout.PREFERRED_SIZE))
+					.addPreferredGap(ComponentPlacement.RELATED)
 					.addComponent(btnImprimir)
-					.addContainerGap(69, Short.MAX_VALUE))
+					.addGap(22)
+					.addComponent(textArea, GroupLayout.PREFERRED_SIZE, 114, GroupLayout.PREFERRED_SIZE)
+					.addGap(10))
 		);
 		contentPane.setLayout(gl_contentPane);
 		setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
@@ -122,26 +132,46 @@ public class JImprimirDafUI extends JFrame implements VeiculoUIIF, ActionListene
 	public void actionPerformed(ActionEvent e) {
 		if(e.getSource() == btnImprimir){
 			
-			if(verificaRadio() == 0){
-				System.out.println("individual teste");
-				try {
-					this.appLogica.listarSumarioDAFIndividual((String)this.comboProprietario.getSelectedItem());
+			try {
+				if(this.appLogica.esProprietarioFrota((String)this.comboProprietario.getSelectedItem())){
 				
-				} catch (Exception e1) {
+				if(verificaRadio() == 0){
+					System.out.println("individual teste");
+					String texto = "";
+					try {
+						this.appLogica.listarSumarioDAFIndividual((String)this.comboProprietario.getSelectedItem());
+						Iterator<DAFIndividual> sumarios = this.appLogica.listarSumarioDAFIndividual((String)this.comboProprietario.getSelectedItem()).iterator();;
+
+						while(sumarios.hasNext()){
+							DAFIndividual sumario = sumarios.next();
+						
+							texto = sumario.toString();
+						}
+						textArea.setText(texto);
 					
-					e1.printStackTrace();
+					} catch (Exception e1) {
+						
+						e1.printStackTrace();
+					}
+					
+				}else{				
+					try {
+						
+						this.appLogica.listarSumarioDAFFrota((String)this.comboProprietario.getSelectedItem());
+					} catch (Exception e1) {
+						System.out.println("imprimir erro");
+						e1.printStackTrace();
+					}
 				}
 				
-			}else{				
-				try {
-					
-					this.appLogica.listarSumarioDAFFrota((String)this.comboProprietario.getSelectedItem());
-				} catch (Exception e1) {
-					System.out.println("imprimir erro");
-					e1.printStackTrace();
 				}
+				else
+					System.out.println("Não é proprietário de frota");
+				
+			} catch (SQLException e1) {
+				
+				e1.printStackTrace();
 			}
-			
 		}
 		
 	}

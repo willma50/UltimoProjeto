@@ -1,6 +1,7 @@
 package veicular.funcoes;
 
 import java.text.DateFormat;
+import java.text.DecimalFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -76,6 +77,8 @@ public class FuncoesData {
         result_days += (endTime.get(GregorianCalendar.DAY_OF_MONTH) - startTime.get(GregorianCalendar.DAY_OF_MONTH));
         return result_years+result_months+result_days;
     }
+	
+	
 	
 	//dataAtual = new java.text.SimpleDateFormat("dd.MM.yyyy").format(new java.util.Date());
 }

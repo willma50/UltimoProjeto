@@ -45,7 +45,7 @@ public class JListaDeVeiculo extends JFrame implements VeiculoUIIF, ActionListen
 	public JListaDeVeiculo() throws Exception {
 		setTitle("Lista de Veiculos");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 493, 354);
+		setBounds(100, 100, 519, 364);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -64,9 +64,8 @@ public class JListaDeVeiculo extends JFrame implements VeiculoUIIF, ActionListen
 		GroupLayout gl_contentPane = new GroupLayout(contentPane);
 		gl_contentPane.setHorizontalGroup(
 			gl_contentPane.createParallelGroup(Alignment.TRAILING)
-				.addComponent(scrollPane, GroupLayout.DEFAULT_SIZE, 471, Short.MAX_VALUE)
 				.addGroup(gl_contentPane.createSequentialGroup()
-					.addContainerGap(193, Short.MAX_VALUE)
+					.addContainerGap(206, Short.MAX_VALUE)
 					.addComponent(btnAtualizar)
 					.addPreferredGap(ComponentPlacement.RELATED)
 					.addComponent(btnRemover)
@@ -78,7 +77,10 @@ public class JListaDeVeiculo extends JFrame implements VeiculoUIIF, ActionListen
 					.addComponent(textBusca, GroupLayout.PREFERRED_SIZE, 327, GroupLayout.PREFERRED_SIZE)
 					.addGap(5)
 					.addComponent(btnFiltrar)
-					.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+					.addContainerGap(21, Short.MAX_VALUE))
+				.addGroup(Alignment.LEADING, gl_contentPane.createSequentialGroup()
+					.addComponent(scrollPane, GroupLayout.DEFAULT_SIZE, 483, Short.MAX_VALUE)
+					.addContainerGap())
 		);
 		gl_contentPane.setVerticalGroup(
 			gl_contentPane.createParallelGroup(Alignment.TRAILING)
@@ -88,7 +90,7 @@ public class JListaDeVeiculo extends JFrame implements VeiculoUIIF, ActionListen
 						.addComponent(lblPlaca)
 						.addComponent(btnFiltrar)
 						.addComponent(textBusca, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-					.addPreferredGap(ComponentPlacement.RELATED, 24, Short.MAX_VALUE)
+					.addPreferredGap(ComponentPlacement.RELATED, 48, Short.MAX_VALUE)
 					.addComponent(scrollPane, GroupLayout.PREFERRED_SIZE, 198, GroupLayout.PREFERRED_SIZE)
 					.addPreferredGap(ComponentPlacement.RELATED)
 					.addGroup(gl_contentPane.createParallelGroup(Alignment.BASELINE)

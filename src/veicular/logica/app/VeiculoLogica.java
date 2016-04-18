@@ -163,7 +163,7 @@ public class VeiculoLogica implements VeiculoLogicaIF{
 		return somaImposto;		
 	}
 	
-	
+	@Override
 	public double valorMedioImpostoFrota(String numCSProprietario) throws Exception{
 		ArrayList<Veiculo> listVeiculo = new ArrayList<Veiculo>();		
 		listVeiculo = this.veiculoDao.findByProprietario(numCSProprietario);
@@ -232,6 +232,13 @@ public class VeiculoLogica implements VeiculoLogicaIF{
 		//System.out.println(dafF.toString());
 		return dafF.toString();
 	}
+
+	
+	@Override	
+	public boolean esProprietarioFrota(String nonme) throws SQLException {		
+		return this.veiculoDao.esProprietarioFrota(nonme);
+	}
+
 }
 
 	

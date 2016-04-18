@@ -21,4 +21,5 @@ public interface VeiculoDaoIF {
 	public int getQtdVeiculosVinculados(Proprietario proprietario) throws SQLException;
 	public boolean getVeiculosNCS(Proprietario proprietario) throws SQLException;
 	public int getClasseVeiculo(Veiculo veiculo);
+	public boolean esProprietarioFrota(String nonme) throws SQLException;
 }

@@ -1,5 +1,6 @@
 package veicular.logica.dominio;
 
+import java.text.DecimalFormat;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -29,7 +30,7 @@ public class Imposto {
 				i++;
 			}
 		}
-		System.out.println("imposto: "+vImposto);
+		//System.out.println("imposto: "+vImposto);
 		return vImposto;		
 	}
 	 
@@ -43,6 +44,16 @@ public class Imposto {
 	}
 
 
+	public static String formatarFloat(float numero){
+		  String retorno = "";
+		  DecimalFormat formatter = new DecimalFormat("#.00");
+		  try{
+		    retorno = formatter.format(numero);
+		  }catch(Exception ex){
+		    System.err.println("Erro ao formatar numero: " + ex);
+		  }
+		  return retorno;
+		}
 	/*public static Double valorTotalImpostoFrota(String numCSProprietario) throws Exception{
 		
 		VeiculoDaoIF vDao = new VeiculoDaoSql();

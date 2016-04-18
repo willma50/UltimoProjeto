@@ -32,6 +32,7 @@ public class JDadosEstatisticosUI extends JFrame implements VeiculoUIIF, ActionL
 	JComboBox comboProprietario;
 	private JTextField textValorMedio;
 	private JTextField textValorTotal;
+	private JButton btnCalcular;
 	
 	public JDadosEstatisticosUI() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -44,9 +45,8 @@ public class JDadosEstatisticosUI extends JFrame implements VeiculoUIIF, ActionL
 		
 		comboProprietario = new JComboBox();
 		
-		JButton btnValorMedio = new JButton("Valor M\u00E9dio");
-		
-		JButton btnValorTotal = new JButton("Valor Total");
+		btnCalcular = new JButton("Calcular");
+		btnCalcular.addActionListener(this);
 		
 		textValorMedio = new JTextField();
 		textValorMedio.setColumns(10);
@@ -57,22 +57,21 @@ public class JDadosEstatisticosUI extends JFrame implements VeiculoUIIF, ActionL
 		gl_contentPane.setHorizontalGroup(
 			gl_contentPane.createParallelGroup(Alignment.LEADING)
 				.addGroup(gl_contentPane.createSequentialGroup()
+					.addGap(47)
+					.addComponent(btnCalcular, GroupLayout.DEFAULT_SIZE, 140, Short.MAX_VALUE)
+					.addGap(62))
+				.addGroup(gl_contentPane.createSequentialGroup()
 					.addContainerGap()
-					.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
-						.addGroup(Alignment.TRAILING, gl_contentPane.createSequentialGroup()
-							.addComponent(label, GroupLayout.PREFERRED_SIZE, 82, GroupLayout.PREFERRED_SIZE)
-							.addGap(29)
-							.addComponent(comboProprietario, GroupLayout.PREFERRED_SIZE, 296, GroupLayout.PREFERRED_SIZE))
-						.addGroup(gl_contentPane.createSequentialGroup()
-							.addGroup(gl_contentPane.createParallelGroup(Alignment.TRAILING, false)
-								.addComponent(btnValorTotal, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-								.addComponent(btnValorMedio, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-							.addPreferredGap(ComponentPlacement.UNRELATED)
-							.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING, false)
-								.addComponent(textValorMedio)
-								.addComponent(textValorTotal, GroupLayout.DEFAULT_SIZE, 140, Short.MAX_VALUE))
-							.addPreferredGap(ComponentPlacement.RELATED, 154, Short.MAX_VALUE)))
+					.addComponent(label, GroupLayout.PREFERRED_SIZE, 82, GroupLayout.PREFERRED_SIZE)
+					.addPreferredGap(ComponentPlacement.UNRELATED)
+					.addComponent(comboProprietario, GroupLayout.PREFERRED_SIZE, 315, GroupLayout.PREFERRED_SIZE)
 					.addContainerGap())
+				.addGroup(gl_contentPane.createSequentialGroup()
+					.addGap(137)
+					.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING, false)
+						.addComponent(textValorMedio)
+						.addComponent(textValorTotal, GroupLayout.PREFERRED_SIZE, 140, GroupLayout.PREFERRED_SIZE))
+					.addContainerGap(150, Short.MAX_VALUE))
 		);
 		gl_contentPane.setVerticalGroup(
 			gl_contentPane.createParallelGroup(Alignment.LEADING)
@@ -84,24 +83,30 @@ public class JDadosEstatisticosUI extends JFrame implements VeiculoUIIF, ActionL
 						.addGroup(gl_contentPane.createSequentialGroup()
 							.addGap(10)
 							.addComponent(comboProprietario, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)))
-					.addGap(18)
-					.addGroup(gl_contentPane.createParallelGroup(Alignment.BASELINE)
-						.addComponent(btnValorMedio)
-						.addComponent(textValorMedio, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+					.addGap(44)
+					.addComponent(textValorMedio, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
 					.addPreferredGap(ComponentPlacement.UNRELATED)
-					.addGroup(gl_contentPane.createParallelGroup(Alignment.BASELINE)
-						.addComponent(btnValorTotal)
-						.addComponent(textValorTotal, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-					.addContainerGap(132, Short.MAX_VALUE))
+					.addComponent(textValorTotal, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+					.addPreferredGap(ComponentPlacement.RELATED, 57, Short.MAX_VALUE)
+					.addComponent(btnCalcular)
+					.addGap(47))
 		);
 		contentPane.setLayout(gl_contentPane);
+		this.textValorMedio.setEditable(false);
+		this.textValorTotal.setEditable(false);
 		setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
 	}
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		
-		
+		try {
+			this.textValorMedio.setText(String.valueOf(this.appLogica.valorMedioImpostoFrota((String)this.comboProprietario.getSelectedItem())));		
+			this.textValorTotal.setText(String.valueOf(this.appLogica.valorTotalImpostoFrota((String)this.comboProprietario.getSelectedItem())));
+		} catch (Exception e1) {
+			
+			e1.printStackTrace();
+		}
 	}
 
 	@Override
