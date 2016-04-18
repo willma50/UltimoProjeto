@@ -26,16 +26,11 @@ import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.JRadioButton;
-import javax.swing.JTextPane;
 
-import java.awt.Component;
-
-import javax.swing.Box;
 import javax.swing.ButtonGroup;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 
-import java.awt.List;
 import java.awt.TextArea;
 
 
@@ -136,7 +131,7 @@ public class JImprimirDafUI extends JFrame implements VeiculoUIIF, ActionListene
 				if(this.appLogica.esProprietarioFrota((String)this.comboProprietario.getSelectedItem())){
 				
 				if(verificaRadio() == 0){
-					System.out.println("individual teste");
+					
 					String texto = "";
 					try {
 						this.appLogica.listarSumarioDAFIndividual((String)this.comboProprietario.getSelectedItem());
@@ -154,10 +149,12 @@ public class JImprimirDafUI extends JFrame implements VeiculoUIIF, ActionListene
 						e1.printStackTrace();
 					}
 					
-				}else{				
+				}else{			
+					String texto = "";
 					try {
 						
-						this.appLogica.listarSumarioDAFFrota((String)this.comboProprietario.getSelectedItem());
+						texto = this.appLogica.listarSumarioDAFFrota((String)this.comboProprietario.getSelectedItem());
+						textArea.setText(texto);
 					} catch (Exception e1) {
 						System.out.println("imprimir erro");
 						e1.printStackTrace();

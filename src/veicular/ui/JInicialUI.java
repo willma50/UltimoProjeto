@@ -1,6 +1,7 @@
 package veicular.ui;
 
 import java.awt.EventQueue;
+
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
@@ -13,6 +14,7 @@ import javax.swing.JMenuItem;
 import javax.swing.JLabel;
 import javax.swing.ImageIcon;
 import javax.swing.SwingConstants;
+
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
@@ -23,7 +25,8 @@ public class JInicialUI extends JFrame implements VeiculoUIIF, ActionListener{
 	private JMenuItem consultarMenuItem;
 	private JMenuItem consultarDados;
 	private JMenuItem imprimirDaf;
-
+	private JMenuItem imprimirDaf2;
+	
 	private VeiculoLogicaIF appLogica;
 
 	
@@ -48,9 +51,13 @@ public class JInicialUI extends JFrame implements VeiculoUIIF, ActionListener{
 		JMenu impressaoMenu = new JMenu("Imprimir");
 		menuBar.add(impressaoMenu);
 		
-		imprimirDaf = new JMenuItem("DAF");
+		imprimirDaf = new JMenuItem("DAF/Proprietário");
 		imprimirDaf.addActionListener(this);
 		impressaoMenu.add(imprimirDaf);
+		
+		imprimirDaf2 = new JMenuItem("DAF Normal");
+		imprimirDaf2.addActionListener(this);
+		impressaoMenu.add(imprimirDaf2);
 		
 		JMenu veiculoMenu = new JMenu("Veículo");
 		manutencaoMenu.add(veiculoMenu);
@@ -120,7 +127,18 @@ public class JInicialUI extends JFrame implements VeiculoUIIF, ActionListener{
 						} catch (Exception e1) {
 							e1.printStackTrace();
 						}
-					}
+					}else
+						if(e.getSource() == imprimirDaf2){
+							
+							JImprimirDAFNormalUI imp = new JImprimirDAFNormalUI();
+							imp.setLogic(appLogica);
+							try {
+								imp.setDisplay();
+							} catch (Exception e1) {
+								
+								e1.printStackTrace();
+							}
+						}
 		
 	}
 
