@@ -17,7 +17,7 @@ public class FuncoesData {
 		SimpleDateFormat formatarDate = new SimpleDateFormat("yyyy-MM-dd"); //teste2
 		System.out.print(formatarDate.format(data2));
 		
-		String data = new java.text.SimpleDateFormat("dd.MM.yyyy").format(new java.util.Date());//teste3 
+		String data = new java.text.SimpleDateFormat("dd-MM-yyyy").format(new java.util.Date());//teste3 
 		
 		return data;
 	}

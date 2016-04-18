@@ -251,5 +251,21 @@ public class VeiculoDaoSql extends DBDAO implements VeiculoDaoIF{
 		}		
 		return false;
 	}
+
+	@Override
+	public int getClasseVeiculo(Veiculo veiculo) {
+		
+		if(veiculo.getClass().equals(Aeronave.class))
+			return VeiculoDaoSql.TIPO_AERONAVE;
+		else if(veiculo.getClass().equals(Embarcacoes.class))
+			return VeiculoDaoSql.TIPO_EMBARCACOES;
+		else if (veiculo.getClass().equals(Terrestres.class))
+			return VeiculoDaoSql.TIPO_TERRESTRE;
+		
+			
+		return VeiculoDaoSql.TIPO_OUTRO;
+		
+		//return 0;
+	}
 	
 }

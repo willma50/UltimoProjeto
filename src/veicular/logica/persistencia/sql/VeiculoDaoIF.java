@@ -20,4 +20,5 @@ public interface VeiculoDaoIF {
 	public Collection<Veiculo> buscaPorPartesVeiculo(String placa) throws Exception;
 	public int getQtdVeiculosVinculados(Proprietario proprietario) throws SQLException;
 	public boolean getVeiculosNCS(Proprietario proprietario) throws SQLException;
+	public int getClasseVeiculo(Veiculo veiculo);
 }

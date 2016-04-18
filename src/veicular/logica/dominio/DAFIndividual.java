@@ -7,11 +7,11 @@ public class DAFIndividual {
 	private int anoFabricacao;
 	private String data;
 	private int classe;
-	private Double baseCalculo;
-	private Double aliquota;
-	private Double impostoDevido;
+	private double baseCalculo;
+	private double aliquota;
+	private double impostoDevido;
 
-	public DAFIndividual(String placa, int anoFabricacao, String data, int classe, Double baseCalculo, Double aliquota, Double impostoDevido) {
+	public DAFIndividual(String placa, int anoFabricacao, String data, int classe, double baseCalculo, double aliquota, double impostoDevido) {
 		this.setPlaca(placa);
 		this.setAnoFabricacao(anoFabricacao);
 		this.setData(data);
@@ -56,27 +56,27 @@ public class DAFIndividual {
 		this.classe = classe;
 	}
 
-	public Double getBaseCalculo() {
+	public double getBaseCalculo() {
 		return baseCalculo;
 	}
 
-	public void setBaseCalculo(Double baseCalculo) {
+	public void setBaseCalculo(double baseCalculo) {
 		this.baseCalculo = baseCalculo;
 	}
 
-	public Double getAliquota() {
+	public double getAliquota() {
 		return aliquota;
 	}
 
-	public void setAliquota(Double aliquota) {
+	public void setAliquota(double aliquota) {
 		this.aliquota = aliquota;
 	}
 
-	public Double getImpostoDevido() {
+	public double getImpostoDevido() {
 		return impostoDevido;
 	}
 
-	public void setImpostoDevido(Double impostoDevido) {
+	public void setImpostoDevido(double impostoDevido) {
 		this.impostoDevido = impostoDevido;
 	}
 	

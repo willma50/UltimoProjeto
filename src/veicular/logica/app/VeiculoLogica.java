@@ -10,7 +10,10 @@ import java.util.Set;
 
 import veicular.funcoes.FuncoesData;
 import veicular.logica.dominio.Aeronave;
+import veicular.logica.dominio.DAFFrota;
+import veicular.logica.dominio.DAFIndividual;
 import veicular.logica.dominio.Embarcacoes;
+import veicular.logica.dominio.Imposto;
 import veicular.logica.dominio.Proprietario;
 import veicular.logica.dominio.Terrestres;
 import veicular.logica.dominio.Veiculo;
@@ -24,6 +27,10 @@ public class VeiculoLogica implements VeiculoLogicaIF{
 	
 	private static final int FROTA_N = 0;
 	private static final int FROTA_S = 1;
+	private static final int TIPO_AERONAVE = 0;
+	private static final int TIPO_EMBARCACOES = 1;	
+	private static final int TIPO_TERRESTRE = 2;
+	private static final int TIPO_OUTRO = 3;
 	private VeiculoDaoIF veiculoDao;
 	private ProprietarioDaoIF ProprietarioDao;
 	private FuncoesData funcao;
@@ -139,34 +146,35 @@ public class VeiculoLogica implements VeiculoLogicaIF{
 		this.funcao = funcao;
 	}
 	
-	
-	public Double valorTotalImpostoFrota(String numCSProprietario) throws Exception{
-		VeiculoDaoIF vDao = new VeiculoDaoSql();
+	@Override
+	public double valorTotalImpostoFrota(String numCSProprietario) throws Exception{
 		ArrayList<Veiculo> listVeiculo = new ArrayList<Veiculo>();		
-		listVeiculo = vDao.findByProprietario(numCSProprietario);
+		listVeiculo = this.veiculoDao.findByProprietario(numCSProprietario);
 		Iterator<Veiculo> itV = listVeiculo.iterator();
-		Double somaImposto = (double) 0;
+		double somaImposto = 0;
+		
 		while(itV.hasNext()){
-			Veiculo v =itV.next();
-			if(v.getClasse()!=3){
-				somaImposto+=v.getImpostoDevido();
+			Veiculo veiculo =itV.next();
+			if(veiculo.getClasse()!=3){
+				somaImposto += Imposto.getCalculoImposto(veiculo);
 			}
 		}
 		somaImposto = calcDescontoImposto(somaImposto);
 		return somaImposto;		
 	}
-	public Double valorMedioImpostoFrota(String numCSProprietario) throws Exception{
-		VeiculoDaoIF vDao = null;
+	
+	
+	public double valorMedioImpostoFrota(String numCSProprietario) throws Exception{
 		ArrayList<Veiculo> listVeiculo = new ArrayList<Veiculo>();		
-		listVeiculo = vDao.findByProprietario(numCSProprietario);
+		listVeiculo = this.veiculoDao.findByProprietario(numCSProprietario);
 		Iterator<Veiculo> itV = listVeiculo.iterator();
-		Double mediaImposto = (double) 0;
+		double mediaImposto = 0;
 		int cont=0;
 		while(itV.hasNext()){
 			cont++;
-			Veiculo v =itV.next();
-			if(v.getClasse()!=3){
-				mediaImposto+=v.getImpostoDevido();
+			Veiculo veiculo =itV.next();
+			if(veiculo.getClasse()!=3){
+				mediaImposto += Imposto.getCalculoImposto(veiculo);
 			}
 		}
 		mediaImposto = calcDescontoImposto(mediaImposto);
@@ -184,6 +192,45 @@ public class VeiculoLogica implements VeiculoLogicaIF{
 	public void atualizaVeiculo(TableModelos modelo) {
 	
 		
+	}
+
+	@Override
+	public Collection<DAFIndividual> listarSumarioDAFIndividual(String numCSProprietario) throws Exception {
+		
+		Collection<Veiculo> listVeiculos = this.veiculoDao.findByProprietario(numCSProprietario);		
+		Iterator<Veiculo> itVeiculo = listVeiculos.iterator();
+		Set<DAFIndividual> sumarioIndividual = new HashSet<DAFIndividual>();
+		ArrayList<String> placas = new ArrayList<String>();
+		System.out.println("individual");
+		while(itVeiculo.hasNext()){
+				
+			Veiculo veiculo = itVeiculo.next();			
+			sumarioIndividual.add(new DAFIndividual(veiculo.getPlaca(), veiculo.getAnoFabricacao(), FuncoesData.getDate(), 
+										this.veiculoDao.getClasseVeiculo(veiculo), veiculo.getBaseCalculo(), veiculo.getAliquota(), 
+										valorTotalImpostoFrota(numCSProprietario) ));
+		}
+		
+		return sumarioIndividual;
+	}
+
+	@Override
+	public String listarSumarioDAFFrota(String numCSProprietario) throws Exception {
+			
+		Collection<Veiculo> listVeiculos = this.veiculoDao.findByProprietario(numCSProprietario);		
+		Iterator<Veiculo> itVeiculo = listVeiculos.iterator();
+		ArrayList<String> placas = new ArrayList<String>();
+		System.out.println("frota");
+		while(itVeiculo.hasNext()){
+			
+			Veiculo veiculo = itVeiculo.next();
+			placas.add(veiculo.getPlaca() + "\n");
+			
+		}
+		
+		DAFFrota dafF = new DAFFrota(numCSProprietario, placas, FuncoesData.getDate(), valorTotalImpostoFrota(numCSProprietario)); 
+	
+		//System.out.println(dafF.toString());
+		return dafF.toString();
 	}
 }
 
