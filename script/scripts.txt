@@ -1,0 +1,20 @@
+CREATE TABLE veiculo
+(
+  proprietario character varying(200) NULL,
+  classe integer,
+  anofabricacao integer,
+  placa character varying(100),
+  valorCompra float,
+  frota integer
+)
+
+
+
+CREATE TABLE proprietario
+(
+  nome character varying(200) NOT NULL,
+  ncs character varying(100)
+)
+
+
+insert into veiculo(proprietario, classe, anofabricacao, placa, valorCompra, frota) values('Joao', 1, 2001, 'pqr-123', 12.2, 1);
